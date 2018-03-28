@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chlab.zylht.dao.UserDao">
+	<resultMap type="com.chlab.zylht.entity.User" id="moduleResultMap">
+		<id property="id" column="id" />
+		<result column="openid" property="openid" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="himg" property="himg" jdbcType="VARCHAR" />
+		<result column="crtime" property="crtime" jdbcType="DATE" />
+		<result column="uptime" property="uptime" jdbcType="DATE" />
+		<result column="utype" property="utype" jdbcType="CHAR" />
+		<result column="uname" property="uname" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="getUserById" resultMap="moduleResultMap">
+		select * from t_user where id = #{id}
+	</select>
+	
+	<select id="listUser" resultMap="moduleResultMap">
+		select * from t_user order by crtime desc
+	</select>
+	
+	<select id="getUserAndScore" resultType="map">
+		select u.id,u.uname,us.score from t_user u left join t_user_score us 
+		on u.id = us.user_id where u.id = #{userId}
+	</select>
+	
+	
+	
+	<insert id="add">
+		insert into t_user(openid,
+		<if test="email != null and email != ''">
+			email,
+		</if>
+		<if test="phone != null and phone != ''">
+			phone,
+		</if>
+		himg,crtime,uptime,utype,uname)
+		values(#{openid},
+		<if test="email != null and email != ''">
+			#{email},
+		</if>
+		<if test="phone != null and phone != ''">
+			#{phone},
+		</if>
+		#{himg},now(),now(),#{utype},#{uname})
+	</insert>
+	<update id="update">
+		update t_user 
+		set 
+		<if test="email != null and email != ''">
+			email = #{email},
+		</if>
+		<if test="phone != null and phone != ''">
+			phone = #{phone},
+		</if>
+		<if test="himg != null and himg != ''">
+			himg = #{himg},
+		</if>
+		<if test="utype != null and utype != ''">
+			utype = #{utype},
+		</if>
+		<if test="uname != null and uname != ''">
+			uname = #{uname},
+		</if>
+		uptime = now()  
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteById">
+		delete from t_user where id = #{id}
+	</delete>
+</mapper> 

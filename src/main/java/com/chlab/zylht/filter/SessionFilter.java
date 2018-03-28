@@ -27,14 +27,16 @@ public class SessionFilter extends OncePerRequestFilter {
 			filterChain.doFilter(request, response);
 			return;
 		} else {
-			if(null == user) {
-				response.sendRedirect(request.getContextPath()+"/login.jsp");
-				return;
-			}
-			else {
-				filterChain.doFilter(request, response);
-				return;
-			}
+//			if(null == user) {
+//				response.sendRedirect(request.getContextPath()+"/login.jsp");
+//				return;
+//			}
+//			else {
+//				filterChain.doFilter(request, response);
+//				return;
+//			}
+			filterChain.doFilter(request, response);
+			return;
 		}
 		
 	}

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0, user-scalable=no">
+<title>公告</title>
+<!-- <link rel="stylesheet" href="css/frozenui.css"/> -->
+<link rel="stylesheet" href="../../css/back.css"/>
+<style type="text/css">
+body {
+	margin: 0;
+	padding: 0;
+	font-size: 12px;
+	background-color: #f5f5f5;
+}
+#noticeadd{
+	height: 27px;
+	line-height: 27px;
+	font-size: 25px;
+	text-align: right;
+	padding-right: 10px;
+}
+.n-table {
+	width: 100%;
+	text-align: center;
+	background-color:white;
+	border-bottom:1px solid #dfdfdf;
+	border-top:1px solid #dfdfdf;
+}
+.n_table > thead{
+	border-bottom:1px solid #dfdfdf;
+}
+.n-table td, .n-table th {
+	width: 33.5%;
+	line-height: 35px;
+	border-color: #ccc;
+}
+.n-table tbody tr:nth-child(even) td,
+.n-table tbody tr:nth-child(even) th {background-color:white;}
+.n-table tbody tr:nth-child(odd) td,
+.n-table tbody tr:nth-child(odd) th {background-color:#dfdfdf;}
+#actionsheet{
+	pointer-events: inherit;
+    opacity: 1;
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    display: -webkit-flex; 
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: rgba(0,0,0,0.4);
+    display: none;
+}
+.nbc{
+	position: fixed;
+	bottom: 0;
+ 	width: 100%;
+ 	z-index: 111;
+ 	display: none;
+}
+.nbc > div{
+ 	display: -webkit-flex; display: flex; -webkit-flex-flow: column; flex-flow: column; 
+    -webkit-transition: all 0.2s linear;
+    -webkit-transform: translate3d(0, 0, 0);
+	height: 50px;
+	line-height:50px;
+	width: 100%;
+	border-top:1px solid #dfdfdf;
+	background-color: white;
+	font-size: 18px;
+    text-align: center;
+}
+.nbc > div:nth-child(4){
+	margin-top: 15px;
+}
+</style>
+</head>
+<body>
+	<div id="back">《</div>
+	<div id="noticeadd"><a id="addn-a">+</a></div>
+	<div>
+		<table class="n-table">
+			<thead>
+				<tr>
+					<th>公告标题</th>
+					<th>顶置状态</th>
+					<th>创建人</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>xxxxxxxxxx</td>
+					<td>xx</td>
+					<td>xx</td>
+				</tr>
+				<tr>
+					<td>xx</td>
+					<td>xx</td>
+					<td>xx</td>
+				</tr>
+				<tr>
+					<td>xx</td>
+					<td>xx</td>
+					<td>xx</td>
+				</tr>
+				<tr>
+					<td>xx</td>
+					<td>xx</td>
+					<td>xx</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<section id="actionsheet">
+	</section>
+	<div class="nbc">
+		<div id="up">顶置</div>
+		<div id="update">修改</div>
+		<div id="delete">删除</div>
+		<div id="cancel">取消</div>
+	</div>
+	
+</body>
+<script type="text/javascript" src="../../js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var o = {
+				//添加
+				addClick:function(){
+					$('#addn-a').click(function(){
+						window.location.href="add.html";
+					});
+				},
+				//表格点击
+				tableClick:function(){
+					$('tbody').on('click','tr',function(){
+						$('#actionsheet').show();	
+						$('.nbc').show();
+					});
+				},
+				//遮罩层其他点击事件
+				otherClick:function(){
+					$('.nbc').on('click','div',function(){
+						var _div = $(this).attr('id');
+						switch (_div) {
+							case 'cancel':
+								$('.nbc').hide();
+								$('#actionsheet').hide();
+								break;
+							case 'up':
+											
+								break;
+							case 'update':
+								
+								break;
+							case 'delete':
+								
+								break;
+						}
+					});
+				},
+				init:function(){
+					o.addClick();
+					o.tableClick();
+					o.otherClick();
+				}
+		}
+		o.init();
+	});
+</script>
+</html>

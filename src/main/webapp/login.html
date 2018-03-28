@@ -2,10 +2,54 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
 <title>登录</title>
+<style type="text/css">
+body {
+	margin: 0;
+	padding: 0;
+}
+.zyl{
+	height:100%;
+	width:100%;
+/* 	align-items:center; /* 垂直居中 */
+	justify-content:center; /* 水平居中 */
+}
+.zname{
+	height: 200px;
+	line-height:200px;
+	width:100%;
+	text-align: center;
+}
+.uinfo{
+	width:100%;
+}
+</style>
 </head>
 <body>
-
+	<div class="zyl">
+		<div class="zname">xxxxxxxxxxxxxxxxxxx</div>
+		<div class="uinfo">
+			<div>
+				name:<input type="text" id="username">
+				password:<input type="password" id="password">
+				<button>登录</button>
+			</div>
+		</div>
+	</div>
 </body>
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+	(function(){
+		$('button').click(function(){
+			$.get('user/getUserById.do',{id:$('#id').val()},function(backData){
+				if(backData.rst){
+					
+				}
+				else{
+					alert('失败');
+				}
+			});
+		});
+	})();
+</script>
 </html>

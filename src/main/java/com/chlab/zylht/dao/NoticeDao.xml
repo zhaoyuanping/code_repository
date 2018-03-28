@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chlab.zylht.dao.NoticeDao">
+	<resultMap type="com.chlab.zylht.entity.Notice" id="moduleResultMap">
+		<id property="id" column="id" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="image" property="image" jdbcType="BLOB" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="userId" property="userId" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="DATE" />
+		<result column="update_time" property="updateTime" jdbcType="DATE" />
+	</resultMap>
+	
+	<select id="listNotice" resultMap="moduleResultMap">
+		select * from t_club_notice order by `status`,create_time desc
+	</select>
+	<select id="getNoticeById" resultMap="moduleResultMap">
+		select * from t_club_notice where id = #{id}
+	</select>
+	<insert id="addNotice">
+		insert into t_club_notice(title,image,content,userId,create_time,status)
+		values(#{title},#{image},#{content},#{userId},now(),0)
+	</insert>
+	<update id="updateNotice">
+		update t_club_notice 
+		set title = #{title},
+		image = #{image},
+		content = #{content},
+		userId = #{userId},
+		update_time = now()
+		where id = #{id}
+	</update>
+	<update id="updateStatus">
+		update t_club_notice set status = #{status} where id = #{id} and status = 0
+	</update>
+	
+	<delete id="deleteNotice">
+		delete from t_club_notice where id = #{id}
+	</delete>
+</mapper> 
