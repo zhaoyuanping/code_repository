@@ -1,0 +1,18 @@
+[{
+	"id":1,
+	"text":"公告管理",
+	"checked":true,
+	"url":"jsp/notice.jsp"
+},{
+	"id":2,
+	"text":"xxni",
+	"url":"html/NewFile.jsp"
+},{
+	"id":3,
+	"text":"xxni",
+	"url":""
+},{
+	"id":4,
+	"text":"xxni",
+	"url":""
+}]

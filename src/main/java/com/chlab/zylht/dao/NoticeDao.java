@@ -40,7 +40,7 @@ public interface NoticeDao extends BaseDao {
 	 * 修改公告顶置状态
 	 * @param id 主键ID
 	 */
-	void updateStatus(int id);
+	void updateStatus(@Param("status")int status ,@Param("id")int id);
 	
 	/**
 	 * 删除公告

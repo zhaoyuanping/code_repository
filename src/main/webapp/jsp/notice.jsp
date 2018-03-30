@@ -1,0 +1,79 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title></title>
+<link rel="stylesheet" type="text/css" href="../js/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../js/easyui/themes/icon.css">
+<link rel="stylesheet" href="../ueditor/froala/css/froala_style.min.css">
+<link rel="stylesheet" href="../ueditor/froala/css/froala_editor.min.css">
+<link rel="stylesheet" href="../ueditor/froala/css/froala_editor.pkgd.min.css">
+<link rel="stylesheet" type="text/css" href="../font-awesome-4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+<!-- <script type="text/javascript" src="../ueditor/utf8-jsp/ueditor.config.js"></script> -->
+<!-- <script type="text/javascript" src="../ueditor/utf8-jsp/ueditor.all.min.js"></script> -->
+
+</head>
+<body>
+	<div id="win" style="width:880px;height:570px;display: none;" >
+		 <div class="easyui-layout" data-options="fit:true">   
+	        <div data-options="region:'north',split:true,border:false" style="height:480px">
+	       		<form id="ff" method="post">   
+				    <div style="margin-top: 10px;padding-left: 10px;">   
+				        <label for="name" >公告标题:</label>   
+				        <input class="easyui-validatebox" type="text" name="name" data-options="required:true" />   
+				    </div>   
+				    <div style="margin-top: 10px;padding-left: 10px;">   
+				        <label for="file">展示图片:</label>   
+				        <input class="easyui-filebox" name="file" style="width:300px">
+				    </div>   
+				    <div style="margin-top: 10px;padding-left: 10px;">   
+				        <label for="content">公告内容:</label>   
+				        	<div id="frolal" class="fr-view" style="width: 850px;"></div>
+<!--  		        <script id="container" name="content" type="text/plain"> -->  
+<!--        						 这里写你的初始化内容 -->
+<!--     					</script> -->
+				    </div> 
+				    <div style="margin-top: 10px;padding-left: 10px;">   
+				        <label for="status">是否顶置:</label>   
+				        <select id="cc" class="easyui-combobox" name="status" style="width:200px;">   
+						    <option value="0">否</option>   
+						    <option value="1">是</option>
+						</select> 
+				    </div> 
+				</form>  
+	        </div>   
+	        <div data-options="region:'center'">   
+           		<div style="padding-top: 10px;text-align: center;">
+           			<a id="submit" href="#" class="easyui-linkbutton" data-options="">提交</a>  
+           			<a id="cancel" href="#" class="easyui-linkbutton" data-options="" style="margin-left: 50px;">取消</a>  
+           		</div>
+	        </div>   
+	    </div>   
+	</div>  
+	<div class="easyui-panel" data-options="border:false;">
+		<table id="dg"></table> 
+	</div>
+</body>
+<script type="text/javascript" src="../ueditor/froala/js/froala_editor.min.js"></script>
+<script type="text/javascript" src="../ueditor/froala/js/froala_editor.pkgd.min.js"></script>
+<script type="text/javascript" src="../ueditor/froala/js/languages/zh_cn.js"></script>
+<script type="text/javascript" src="../js/jsp/notice.js"></script>
+<script type="text/javascript">
+// 	var ue = UE.getEditor('container');
+	$(function(){
+		$('#frolal').froalaEditor({
+			heightMin:250, 
+		    heightMax:250,
+			language:'zh_cn',
+			toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'html', '|', 'undo', 'redo'],      
+			//imageUploadURL:''
+		});
+		$('#frolal').froalaEditor('image.align' , 'left' ); 
+	});
+</script>
+</html>

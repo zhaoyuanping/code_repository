@@ -36,8 +36,8 @@ public class NoticeService {
 		}
 	}
 	
-	public void updateStatus(int id) {
-		dao.updateStatus(id);
+	public void updateStatus(int status,int id) {
+		dao.updateStatus(status, id);
 	}
 	
 	public void delete(int id) {

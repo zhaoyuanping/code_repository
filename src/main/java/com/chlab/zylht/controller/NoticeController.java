@@ -67,14 +67,14 @@ public class NoticeController extends BaseController{
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/updateStatus", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public Map<String, Object> updateStatus(@RequestParam int id) {
+	public Map<String, Object> updateStatus(@RequestParam int status, @RequestParam int id) {
 		try {
-			service.updateStatus(id);
+			service.updateStatus(status, id);
 			
-			return successMsg("发布成功");
+			return successMsg("保存成功");
 		} catch (Exception e) {
 			
-			return failMsg("发布失败，请联系系统管理员!");
+			return failMsg("保存失败，请联系系统管理员!");
 		}
 	}
 	
@@ -108,7 +108,7 @@ public class NoticeController extends BaseController{
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public Map<String, Object> delete(@RequestParam int id) {
 		try {
 			service.delete(id);

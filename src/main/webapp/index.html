@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" type="text/css" href="js/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="js/easyui/themes/icon.css">
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js/easyui/jquery.easyui.min.js"></script>
+<style type="text/css">
+body {
+	margin: 1px !important;
+}
+iframe {
+	border: none;
+}
+</style>
+</head>
+<body>
+	<div class="easyui-layout" style="width: 100%; height: 800px;">
+		<div data-options="region:'north'" style="height: 120px"></div>
+		<div id="p" data-options="region:'west'" style="width: 15%; padding: 10px; height: 100%;">
+			<div class="easyui-panel" data-options="border:false;">
+				<ul id="menu" class="easyui-tree" data-options="url:'menu.json'"></ul>
+			</div>
+		</div>
+		<div data-options="region:'center'">
+			<iframe width="99%" height="99%"></iframe>
+		</div>
+	</div>
+
+</body>
+<script type="text/javascript" src="js/index.js"></script>
+</html>

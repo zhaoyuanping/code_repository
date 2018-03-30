@@ -2,6 +2,8 @@ package com.chlab.zylht.entity;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
  * @author zyp
  * 公告模型对象
@@ -48,12 +50,14 @@ public class Notice {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") 
 	public Date getCreateTime() {
 		return createTime;
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") 
 	public Date getUpdateTime() {
 		return updateTime;
 	}
