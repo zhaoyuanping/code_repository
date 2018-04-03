@@ -1,12 +1,18 @@
 package com.chlab.zylht.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.chlab.zylht.entity.Notice;
 import com.chlab.zylht.service.NoticeService;
 import com.chlab.zylht.util.PageData;
+import com.chlab.zylht.util.Uploader;
 import com.github.pagehelper.Page;
 
 /**
@@ -85,13 +92,29 @@ public class NoticeController extends BaseController{
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public Map<String, Object> update(Notice notice,@RequestParam MultipartFile file) {
+	public Map<String, Object> update(Notice notice,MultipartFile file) {
 		try {
 			if(null != file && file.getBytes().length > 0) {
-				byte[] bytes = file.getBytes();
-				notice.setImage(bytes);
+				String realName = file.getOriginalFilename();
+				String suffix = realName.substring(realName.lastIndexOf("."),realName.length());
+				if(!this.charckImageType(suffix)){  
+					
+					return failMsg("图片格式错误");
+		        }  
+				try {
+					Properties prop = new Properties();
+					prop = PropertiesLoaderUtils.loadAllProperties("property.properties");  
+					String fileName = String.valueOf(System.currentTimeMillis()) + ((int)Math.random() * 9999) + suffix;
+					String realPath = prop.getProperty("upfile-path") + File.separator;
+					File f = new File(realPath, fileName);
+					file.transferTo(f);
+					notice.setImage(fileName);
+				} catch (Exception e) {
+					// TODO: handle exception
+					return failMsg("图片上传失败");
+				}
 			}
-			notice.setUserId(getLoginUser().getId());
+//			notice.setUserId(getLoginUser().getId());
 			service.update(notice);
 			
 			return successMsg("添加成功");
@@ -101,6 +124,7 @@ public class NoticeController extends BaseController{
 			return failMsg("添加失败，请联系系统管理员!");
 		}
 	}
+	
 	
 	/**
 	 * 删除公告
@@ -122,28 +146,77 @@ public class NoticeController extends BaseController{
 	
 	@RequestMapping(value = "/getImg", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public void getImg(HttpServletResponse response, @RequestParam int id) {
-		ServletOutputStream out = null;
-		Notice notice = service.getNoticeById(id);
-		byte[] bytes = null;
-		if(null != notice) {
-			bytes = notice.getImage();
+//		ServletOutputStream out = null;
+//		Notice notice = service.getNoticeById(id);
+//		byte[] bytes = null;
+//		if(null != notice) {
+//			bytes = notice.getImage();
+//			try {
+//				if(null != bytes && bytes.length > 0) {
+//					out = response.getOutputStream();
+//		            out.write(bytes);  
+//		            out.flush(); 
+//				}
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			} finally {  
+//				try {
+//					if(null != out) 
+//						out.close();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//	        } 
+//		}
+	}
+	
+	@RequestMapping(value = "/fileUpload", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public @ResponseBody Map<String, Object> fileUpload(@RequestParam MultipartFile upfile,HttpServletRequest request){
+		MultipartFile file = upfile;
+		if(null != file && file.getSize() > 0){
+			String realName = file.getOriginalFilename();
+			String suffix = realName.substring(realName.lastIndexOf("."),realName.length());
+			if(!this.charckImageType(suffix)){  
+				
+				return failMsg("图片格式错误");
+	        }  
 			try {
-				if(null != bytes && bytes.length > 0) {
-					out = response.getOutputStream();
-		            out.write(bytes);  
-		            out.flush(); 
-				}
+				Properties prop = new Properties();
+				prop = PropertiesLoaderUtils.loadAllProperties("property.properties");  
+				String fileName = String.valueOf(System.currentTimeMillis()) + ((int)Math.random() * 9999) + suffix;
+				String realPath = prop.getProperty("upfile-path") + File.separator;
+				File f = new File(realPath, fileName);
+				file.transferTo(f);
+				Map<String, Object> map = new HashMap<>();
+				map.put("link",prop.getProperty("image-url") + fileName);
+				map.put("url",prop.getProperty("image-url") + fileName);
+				map.put("name",file.getName());
+				map.put("originalName",file.getOriginalFilename());
+				map.put("size",file.getSize());
+				map.put("state","SUCCESS");
+				map.put("type",suffix);
+				return map;
 			} catch (IOException e) {
 				e.printStackTrace();
-			} finally {  
-				try {
-					if(null != out) 
-						out.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-	        } 
+				return failMsg("图片上传失败");
+			}
 		}
+		
+		return failMsg("图片上传失败");
+	}
+	
+	private boolean charckImageType(String suffix){
+		String[] fileType = {".gif" , ".png" , ".jpg" , ".jpeg" , ".bmp"};
+		Arrays.sort(fileType);
+		String[] arrSuffix = {suffix};
+		for (String t : fileType) {
+			if(Arrays.binarySearch(arrSuffix, t) >= 0){  
+				
+				return true;
+	        }  
+		}
+		
+		return false;
 	}
 	
 }

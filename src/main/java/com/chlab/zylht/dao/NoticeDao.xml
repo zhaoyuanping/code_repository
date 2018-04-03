@@ -19,14 +19,23 @@
 	</select>
 	<insert id="addNotice">
 		insert into t_club_notice(title,image,content,userId,create_time,status)
-		values(#{title},#{image},#{content},#{userId},now(),0)
+		values(#{title},#{image},#{content},#{userId},now(),#{status})
 	</insert>
 	<update id="updateNotice">
 		update t_club_notice 
-		set title = #{title},
-		image = #{image},
-		content = #{content},
-		userId = #{userId},
+		set 
+		<if test="title != null and title != ''">
+			title = #{title},
+		</if>
+		<if test="image != null and image != ''">
+			image = #{image},
+		</if>
+		<if test="content != null and content != ''">
+			content = #{content},
+		</if>
+		<if test="userId != null and userId != ''">
+			userId = #{userId},
+		</if>
 		update_time = now()
 		where id = #{id}
 	</update>

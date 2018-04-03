@@ -12,7 +12,7 @@ public class Notice {
 
 	private Integer id;
 	private String title;     //公告标题
-	private byte[] image;       //公告标题图片
+	private String image;       //公告标题图片
 	private String content;   //公告内容
 	private int	userId;       //创建用户
 	private Date createTime;  //创建时间
@@ -32,10 +32,10 @@ public class Notice {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public byte[] getImage() {
+	public String getImage() {
 		return image;
 	}
-	public void setImage(byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 	public String getContent() {

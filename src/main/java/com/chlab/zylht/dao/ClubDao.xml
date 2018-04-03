@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chlab.zylht.dao.ClubDao">
+	<resultMap type="com.chlab.zylht.entity.Club" id="moduleResultMap">
+		<id property="id" column="id" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="cruser" property="cruser" jdbcType="INTEGER" />
+		<result column="introduc" property="introduc" jdbcType="VARCHAR" />
+		<result column="crtime" property="crTime" jdbcType="DATE" />
+		<result column="uptime" property="upTime" jdbcType="DATE" />
+		<result column="invite_code" property="inviteCode" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="getClubById" resultMap="moduleResultMap">
+		select * from t_club where id = #{id}
+	</select>
+	<select id="getClubByInviteCode" resultType="java.lang.Integer">
+		select id from t_club where invite_code = #{inviteCode}
+	</select>
+	
+	<select id="listClub" resultMap="moduleResultMap">
+		select * from t_club order by crtime desc
+	</select>
+	
+	<select id="listClubByUserId" resultMap="moduleResultMap">
+		select * from t_club where cruser = #{userId} order by crtime desc
+	</select>
+	
+	<select id="listClubGame" resultType="map">
+	
+			SELECT c.`name`,c.invite_code,gr.ps,gr.ID,gr.pjtype,gr.pjsc,gr.pjsl,u.himg,u.uname from 
+			t_club_users cu RIGHT JOIN t_game_room gr on gr.cr_user = cu.user_id
+			LEFT JOIN t_club c on c.ID = cu.club_id
+			LEFT JOIN t_user u on u.id = cu.user_id
+			<!-- 单个俱乐部下的牌局 -->
+			<if test="clubId != null and clubId != ''">
+				where cu.club_id = #{clubId} and gr.state in (0,1) ORDER BY gr.state desc
+			</if>
+			<!-- 用户下所有的俱乐部牌局 -->
+			<if test="userId != null and userId != ''">
+				where cu.club_id in (SELECT club_id from t_club_users where user_id = #{userId}) and gr.state in (0,1) GROUP BY gr.ID ORDER BY gr.state desc ;
+			</if>
+	</select>
+	
+	<insert id="addClub" keyProperty="id" useGeneratedKeys="true" parameterType="com.chlab.zyl.po.Club">
+		insert into t_club(name,cruser,introduc,crtime,invite_code)
+		values(#{name},#{cruser},#{introduc},now(),#{inviteCode})
+	</insert>
+	<update id="updateClub">
+		update t_club 
+		set 
+		<if test="name != null and name != ''">
+			name = #{name},
+		</if>
+		<if test="cruser != null and cruser != ''">
+			cruser = #{cruser},
+		</if>
+		<if test="introduc != null and introduc != ''">
+			introduc = #{introduc},
+		</if>
+		<if test="inviteCode != null and inviteCode != ''">
+			invite_code = #{inviteCode},
+		</if>
+		uptime = now()  
+		where id = #{id}
+	</update>
+	<update id="updateScore">
+		update t_club 
+		set 
+		<if test="score != null and score != ''">
+			score = #{score},
+		</if>
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteById">
+		delete from t_club where id = #{id}
+	</delete>
+	
+	<select id="isExitsInviteCode" resultType="int">
+		select count(0) from t_club where invite_code = #{inviteCode}
+	</select>
+	
+	<select id="getClubAndUser" resultType="map">
+		SELECT c.ID,c.`name`,c.introduc,u.himg from t_club c 
+		LEFT JOIN t_user u on c.cruser = u.id
+		where c.ID = #{clubId}
+	</select>
+</mapper> 

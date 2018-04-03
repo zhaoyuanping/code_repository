@@ -5,11 +5,11 @@
 	"url":"jsp/notice.jsp"
 },{
 	"id":2,
-	"text":"xxni",
-	"url":"html/NewFile.jsp"
+	"text":"俱乐部管理",
+	"url":"jsp/club.jsp"
 },{
 	"id":3,
-	"text":"xxni",
+	"text":"用户信息",
 	"url":""
 },{
 	"id":4,

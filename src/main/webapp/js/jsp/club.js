@@ -1,0 +1,13 @@
+$(function(){
+	$('#datagrid').datagrid({    
+	    url:'datagrid_data.json',    
+	    columns:[[    
+	        {field:'name',title:'名称',width:120},    
+	        {field:'cruser',title:'创建人',width:100},    
+	        {field:'introduc',title:'简介',width:150,align:'left'},
+	        {field:'invite_code',title:'邀请码',width:100},
+	        {field:'uptime',title:'修改时间',width:120},
+	        {field:'crtime',title:'创建时间',width:120}
+	    ]]    
+	}); 
+});
