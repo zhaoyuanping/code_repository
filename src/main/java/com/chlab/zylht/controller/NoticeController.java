@@ -92,7 +92,7 @@ public class NoticeController extends BaseController{
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public Map<String, Object> update(Notice notice,MultipartFile file) {
+	public Map<String, Object> update(Notice notice,@RequestParam(required=false) MultipartFile file) {
 		try {
 			if(null != file && file.getBytes().length > 0) {
 				String realName = file.getOriginalFilename();

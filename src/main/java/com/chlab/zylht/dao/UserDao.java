@@ -15,7 +15,14 @@ public interface UserDao extends BaseDao {
 	 * @param id 主键ID
 	 * @return 
 	 */
-	User getUserById(int id);
+	User getUserById(@Param("id")int id);
+	
+	/**
+	 * 根据openid获取用户信息
+	 * @param Openid
+	 * @return
+	 */
+	User getUserByOpenid(@Param("openid") String openid);
 	
 	/**
 	 * 获取用户列表数据

@@ -64,9 +64,9 @@ public class ClubController extends BaseController {
 	public @ResponseBody Map<String, Object> update(Club club) {
 		if(null != club) {
 			try {
-				Club c = clubService.update(club, getLoginUser().getId());
+				Club c = clubService.update(club);
 				
-				return successMsg(c);
+				return successMsg("保存成功");
 			} catch (Exception e) {
 				e.printStackTrace();
 				// TODO: handle exception

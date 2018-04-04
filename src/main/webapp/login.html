@@ -8,48 +8,12 @@ body {
 	margin: 0;
 	padding: 0;
 }
-.zyl{
-	height:100%;
-	width:100%;
-/* 	align-items:center; /* 垂直居中 */
-	justify-content:center; /* 水平居中 */
-}
-.zname{
-	height: 200px;
-	line-height:200px;
-	width:100%;
-	text-align: center;
-}
-.uinfo{
-	width:100%;
-}
 </style>
+<script type="text/javascript" src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
 </head>
 <body>
-	<div class="zyl">
-		<div class="zname">xxxxxxxxxxxxxxxxxxx</div>
-		<div class="uinfo">
-			<div>
-				name:<input type="text" id="username">
-				password:<input type="password" id="password">
-				<button>登录</button>
-			</div>
-		</div>
-	</div>
+	<div id="login_container" style="width: 100px;height: 100px;"></div>
 </body>
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript">
-	(function(){
-		$('button').click(function(){
-			$.get('user/getUserById.do',{id:$('#id').val()},function(backData){
-				if(backData.rst){
-					
-				}
-				else{
-					alert('失败');
-				}
-			});
-		});
-	})();
-</script>
+<script type="text/javascript" src="js/login.js"></script>
 </html>

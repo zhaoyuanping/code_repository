@@ -29,6 +29,16 @@ public class UserService {
 	}
 	
 	/**
+	 * 根据openid获取用户信息
+	 * @param Openid
+	 * @return
+	 */
+	public User getUserByOpenid(String openid){
+		
+		return userDao.getUserByOpenid(openid);
+	}
+	
+	/**
 	 * 获取用户列表数据
 	 * @return 用户对象集合
 	 */

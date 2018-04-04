@@ -9,6 +9,10 @@
 		<result column="crtime" property="crTime" jdbcType="DATE" />
 		<result column="uptime" property="upTime" jdbcType="DATE" />
 		<result column="invite_code" property="inviteCode" jdbcType="VARCHAR" />
+		<result column="score" property="score" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="explain" property="explain" jdbcType="VARCHAR" />
+		<result column="uname" property="uname" jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<select id="getClubById" resultMap="moduleResultMap">
@@ -19,7 +23,9 @@
 	</select>
 	
 	<select id="listClub" resultMap="moduleResultMap">
-		select * from t_club order by crtime desc
+		select c.*,u.uname from t_club c
+		LEFT JOIN t_user u on u.id = c.ID
+		order by c.crtime   ,c.`status` asc
 	</select>
 	
 	<select id="listClubByUserId" resultMap="moduleResultMap">
@@ -42,7 +48,7 @@
 			</if>
 	</select>
 	
-	<insert id="addClub" keyProperty="id" useGeneratedKeys="true" parameterType="com.chlab.zyl.po.Club">
+	<insert id="addClub" keyProperty="id" useGeneratedKeys="true" parameterType="com.chlab.zylht.entity.Club">
 		insert into t_club(name,cruser,introduc,crtime,invite_code)
 		values(#{name},#{cruser},#{introduc},now(),#{inviteCode})
 	</insert>
@@ -60,6 +66,15 @@
 		</if>
 		<if test="inviteCode != null and inviteCode != ''">
 			invite_code = #{inviteCode},
+		</if>
+		<if test="score != null and score != ''">
+			score = #{score},
+		</if>
+		<if test="status != null and status != ''">
+			status = #{status},
+		</if>
+		<if test="explain != null and explain != ''">
+			`explain` = #{explain},
 		</if>
 		uptime = now()  
 		where id = #{id}

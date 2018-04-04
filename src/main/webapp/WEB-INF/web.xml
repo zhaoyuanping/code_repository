@@ -62,4 +62,8 @@
 		<filter-name>sessionFilter</filter-name>
 		<url-pattern>*.jsp</url-pattern>
 	</filter-mapping>
+	<filter-mapping>
+		<filter-name>sessionFilter</filter-name>
+		<url-pattern>*.html</url-pattern>
+	</filter-mapping>
 </web-app>

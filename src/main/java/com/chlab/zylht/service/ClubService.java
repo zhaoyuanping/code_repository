@@ -40,7 +40,7 @@ public class ClubService {
 	 * 添加或修改俱乐部数据
 	 * @param club 俱乐部模型对象
 	 */
-	public Club update(Club club, int userId) {
+	public Club update(Club club) {
 		if(null != club.getId()) {
 			
 			clubDao.updateClub(club);

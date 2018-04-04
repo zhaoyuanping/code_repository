@@ -27,16 +27,18 @@ public class SessionFilter extends OncePerRequestFilter {
 			filterChain.doFilter(request, response);
 			return;
 		} else {
-//			if(null == user) {
-//				response.sendRedirect(request.getContextPath()+"/login.jsp");
-//				return;
-//			}
-//			else {
-//				filterChain.doFilter(request, response);
-//				return;
-//			}
-			filterChain.doFilter(request, response);
-			return;
+			if(null == user) {
+				if(path.endsWith("wx/callBack.do") || path.endsWith("login.html")){
+					filterChain.doFilter(request, response);
+					return;
+				}
+				response.sendRedirect(request.getContextPath()+"/login.html");
+				return;
+			}
+			else {
+				filterChain.doFilter(request, response);
+				return;
+			}
 		}
 		
 	}

@@ -16,7 +16,9 @@ public class Club {
 	private String inviteCode; //俱乐部邀请码
 	
 	private int score; //俱乐部剩余积分
-	
+	private int status; //'审核状态[0-待审核，1-审核通过，2-审核不通过]'
+	private String explain; //'审核说明'
+	private String uname;
 	
 	public Integer getId() {
 		return id;
@@ -65,6 +67,24 @@ public class Club {
 	}
 	public void setScore(int score) {
 		this.score = score;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	public String getExplain() {
+		return explain;
+	}
+	public void setExplain(String explain) {
+		this.explain = explain;
+	}
+	public String getUname() {
+		return uname;
+	}
+	public void setUname(String uname) {
+		this.uname = uname;
 	}
 	
 	

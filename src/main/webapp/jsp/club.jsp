@@ -12,6 +12,12 @@
 </head>
 <body>
 	<div id="datagrid"></div>
+	<div id="win" style="width:400px;height:200px;display: none;">
+		<textarea id="btgtextarea" style="width: 380px;height: 100px;resize:none" placeholder="限50字数"></textarea>
+		<div style="margin-top: 10px;">
+			<a id="btn-btg" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">提交</a>
+		</div>
+	</div>
 </body>	
 <script type="text/javascript" src="../js/jsp/club.js"></script>
 </html>

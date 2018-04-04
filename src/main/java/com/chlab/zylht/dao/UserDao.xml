@@ -17,6 +17,10 @@
 		select * from t_user where id = #{id}
 	</select>
 	
+	<select id="getUserByOpenid" resultMap="moduleResultMap">
+		select * from t_user where openid = #{openid}
+	</select>
+	
 	<select id="listUser" resultMap="moduleResultMap">
 		select * from t_user order by crtime desc
 	</select>

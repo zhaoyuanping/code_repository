@@ -63,7 +63,7 @@
 	<div class="easyui-panel" data-options="border:false;">
 		<table id="dg"></table> 
 	</div>
-	<div id="imgwin">
+	<div id="imgwin" style="display: none;">
 		<div class="easyui-layout" data-options="fit:true">
 			<div data-options="region:'north',split:true,border:false" style="height:480px">
 				<form id="iff"  method="post" enctype="multipart/form-data">
