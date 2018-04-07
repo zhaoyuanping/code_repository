@@ -25,80 +25,27 @@ public class UserController extends BaseController{
 
 	@Autowired
 	private UserService userService;
-
-	/**
-	 * 根据ID获取用户信息
-	 * @param id 主键ID
-	 * @return 
-	 */
-	@RequestMapping(value = "/getUserById", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public @ResponseBody Map<String,Object>  getUserById(@RequestParam int id) {
-		User user = userService.getUserById(id);
-		getSession().setAttribute("user", user);
-		
-		return successMsg(user);
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public @ResponseBody Map<String, Object> login(@RequestParam String name, @RequestParam  String pwd){
+		if("admin".equals(name) && "123456".equals(pwd)) {
+			User user = new User();
+			user.setUname(name);
+			user.setId(0);
+			getSession().setAttribute("user", user);
+			
+			return successMsg("登录成功");
+		}
+		return successMsg("登录失败");
 	}
 	
-	/**
-	 * 获取用户列表数据
-	 * @return 用户对象集合
-	 */
-	@RequestMapping(value = "/listUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public @ResponseBody PageData listUser(Integer pageNum, Integer pageSize) {
+	@RequestMapping(value = "/listUserInfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public @ResponseBody PageData listUserInfo(String clubName, String uname, Integer pageNum, Integer pageSize){
 		pageNum = pageNum == null? 1 : pageNum;
 		pageSize = pageSize == null? 10 : pageSize;
-		Page<User> page = userService.listUser(pageNum, pageSize);
+		Page<Map<String, Object>> page = userService.listUserInfo(clubName, uname, pageNum, pageSize);
 		
-//		return ResultInfoWithPage.getSuccessInfo(page, page.getTotal(), page.getPageNum());
 		return pageData(page);
-	}
-	
-	/**
-	 * 新增用户或者修改用户信息
-	 * @param user 用户模型对象
-	 */
-	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public @ResponseBody Map<String,Object>  update(User user){
-		if(null != user) {
-			try {
-				userService.update(user);
-				
-				return successMsg("修改成功");
-			} catch (Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
-				return failMsg("修改失败!");
-			}
-		}
-		
-		return failMsg("修改失败,用户对象为空!");
-	}
-	
-	/**
-	 * 根据用户主键ID删除用户
-	 * @param id
-	 */
-	@RequestMapping(value = "/deleteById", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public @ResponseBody Map<String,Object>  deleteById(@RequestParam int id) {
-		try {
-			userService.deleteById(id);
-			
-			return successMsg("删除成功");
-		} catch (Exception e) {
-			// TODO: handle exception
-			return failMsg("删除失败!");
-		}
-	}
-	
-	/**
-	 * 获取用户和用户积分信息
-	 * @param userId 用户id
-	 * @return
-	 */
-	@RequestMapping(value = "/getUserAndScore", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public @ResponseBody Map<String, Object> getUserAndScore(@RequestParam int userId){
-		
-		return successMsg(userService.getUserAndScore(userId));
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -109,5 +56,13 @@ public class UserController extends BaseController{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	@RequestMapping(value = "/listUserScore", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public @ResponseBody PageData listUserScore(String uname,String startTime, String endTime, Integer pageNum, Integer pageSize){
+		pageNum = pageNum == null? 1 : pageNum;
+		pageSize = pageSize == null? 10 : pageSize;
+		Page<Map<String, Object>> page = userService.listUserScore(uname, startTime, endTime, pageNum, pageSize);
+		
+		return pageData(page);
 	}
 }

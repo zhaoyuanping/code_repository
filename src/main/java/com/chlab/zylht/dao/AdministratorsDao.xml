@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chlab.zylht.dao.AdministratorsDao">
+	<resultMap type="com.chlab.zylht.entity.Administrators" id="moduleResultMap">
+		<id property="id" column="id" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="crtime" property="crtime" jdbcType="DATE" />
+	</resultMap>
+	
+	<select id="gettUserById" resultMap="moduleResultMap">
+		select * from t_administrators where id = #{id}
+	</select>
+	
+	<select id="gettUserByUsername" resultMap="moduleResultMap">
+		select * from t_administrators where username = #{username}
+	</select>
+	
+	<select id="listUser" resultMap="moduleResultMap">
+		select * from t_administrators 
+		order by crtime desc
+	</select>
+	
+	<select id="getUserByusernameAndpassword" resultMap="moduleResultMap">
+		select * from t_administrators where 
+		username = #{username} and password = #{password} and status = 1
+	</select>
+	
+	<insert id="add" parameterType="com.chlab.zylht.entity.Administrators">
+		insert into t_administrators(username,password,email,phone,type,crtime)
+		values(#{username},#{password},#{email},#{phone},#{type},now())
+	</insert>
+	
+	<update id="update">
+		update t_administrators 
+		<set>
+			<if test="password != null and password != ''">
+				password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null and email != ''">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null and phone != ''">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+		</set> 
+		where id = #{id}
+	</update>
+</mapper> 

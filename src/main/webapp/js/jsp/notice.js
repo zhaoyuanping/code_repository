@@ -5,6 +5,7 @@ $(function(){
 	var IURL = 'http://localhost:9988/images/';
 	$('#dg').datagrid({
 		singleSelect:true,
+		pagination:true,
 		url:'../notice/list.do',  
 		method:'get',
 		queryParams: {
@@ -30,16 +31,26 @@ $(function(){
 		        	  return value == 1?'顶置':'普通';
 		          },styler:function(value,row,index){
 		        	  if (value == 1){
-		        		  return 'color:red;';
+		        		  return 'color:green;';
 		        	  }
 		          }},   
-		          {field:'createTime',title:'创建时间',width:120,formatter:function(value,row,index){
-
-		        	  return value;
-		          }},  
-		          {field:'cz',title:'操作',width:120,align:'center',formatter:function(value,row,index){
-		        	  return '<a class="upnotice" data-id='+row.id+' href="javascript:;" style="text-decoration: none;">顶置</a> | '+
-		        	  '<a class="updatanotice" data-id='+row.id+' href="javascript:;" style="text-decoration: none;">修改</a> | <a class="delnotice" data-id='+row.id+' href="javascript:;" style="text-decoration: none;">删除</a>';
+		          {field:'rack',title:'是否上架',width:120,align:'center',formatter:function(value,row,index){
+		        	  return value == 1?'上架':'下架';
+		          },styler:function(value,row,index){
+		        	  if (value == 1){
+		        		  return 'color:green;';
+		        	  }
+		          }},    
+		          {field:'createTime',title:'创建时间',width:140,formatter:function(v,r,i){
+			        	
+			        	return value(v);
+			        }},  
+		          {field:'cz',title:'操作',width:170,align:'center',formatter:function(value,row,index){
+		        	  var qudz = '<a class="upnotice" stat=0 data-id='+row.id+' href="javascript:;" style="text-decoration: none;">取消顶置</a>';
+		        	  var dz = '<a class="upnotice" stat=1 data-id='+row.id+' href="javascript:;" style="text-decoration: none;">顶置</a>';
+		        	  var xj = '<a class="uprack" rack=0 data-id='+row.id+' href="javascript:;" style="text-decoration: none;">下架</a>';
+		        	  var sj = '<a class="uprack" rack=1 data-id='+row.id+' href="javascript:;" style="text-decoration: none;">上架</a>';
+		        	  return (row.status == 1?qudz:dz) + ' | '+ (row.rack == 1?xj:sj) +' | <a class="updatanotice" data-id='+row.id+' href="javascript:;" style="text-decoration: none;">修改</a> | <a class="delnotice" data-id='+row.id+' href="javascript:;" style="text-decoration: none;">删除</a>';
 		          }}
 		          ]],
 		          toolbar: [{
@@ -89,7 +100,13 @@ $(function(){
 		        		  });
 		        	  });
 		        	  $('.upnotice').click(function(){
-		        		  $.post('../notice/updateStatus.do',{status:1,id:$(this).attr('data-id')},function(d){
+		        		  $.post('../notice/updateStatus.do',{status:$(this).attr('stat'),id:$(this).attr('data-id')},function(d){
+		        			  $('#dg').datagrid('reload');
+		        			  $.messager.alert('提示',d.msg); 
+		        		  });
+		        	  });
+		        	  $('.uprack').click(function(){
+		        		  $.post('../notice/updateStatus.do',{rack:$(this).attr('rack'),id:$(this).attr('data-id')},function(d){
 		        			  $('#dg').datagrid('reload');
 		        			  $.messager.alert('提示',d.msg); 
 		        		  });

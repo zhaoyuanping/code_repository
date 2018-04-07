@@ -18,7 +18,7 @@ public class Notice {
 	private Date createTime;  //创建时间
 	private Date updateTime;  //发布时间
 	private int status;       //顶置[1-顶置，0-普通]
-	
+	private Integer rack;  //是否上架[0-下架，1-上架]
 	
 	public Integer getId() {
 		return id;
@@ -69,6 +69,12 @@ public class Notice {
 	}
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	public Integer getRack() {
+		return rack;
+	}
+	public void setRack(Integer rack) {
+		this.rack = rack;
 	}
 	
 	

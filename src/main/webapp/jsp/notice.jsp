@@ -9,12 +9,6 @@
 <link rel="stylesheet" type="text/css" href="../js/easyui/themes/icon.css">
 <link href="../ueditor/utf8-jsp/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
 
-
-
-<link rel="stylesheet" href="../ueditor/froala/css/froala_style.min.css">
-<link rel="stylesheet" href="../ueditor/froala/css/froala_editor.min.css">
-<link rel="stylesheet" href="../ueditor/froala/css/froala_editor.pkgd.min.css">
-<link rel="stylesheet" type="text/css" href="../font-awesome-4.7.0/css/font-awesome.min.css">
 <script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="../js/common.js"></script>
@@ -61,7 +55,7 @@
 	    </div>   
 	</div>  
 	<div class="easyui-panel" data-options="border:false;">
-		<table id="dg"></table> 
+		<table id="dg" style="height:500px"></table> 
 	</div>
 	<div id="imgwin" style="display: none;">
 		<div class="easyui-layout" data-options="fit:true">
@@ -79,9 +73,6 @@
 		</div>
 	</div>
 </body>
-<script type="text/javascript" src="../ueditor/froala/js/froala_editor.min.js"></script>
-<script type="text/javascript" src="../ueditor/froala/js/froala_editor.pkgd.min.js"></script>
-<script type="text/javascript" src="../ueditor/froala/js/languages/zh_cn.js"></script>
 <script type="text/javascript" src="../js/jsp/notice.js"></script>
 <script type="text/javascript">
 	$(function(){

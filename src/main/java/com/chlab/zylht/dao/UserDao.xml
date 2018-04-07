@@ -13,66 +13,45 @@
 		<result column="uname" property="uname" jdbcType="VARCHAR" />
 	</resultMap>
 	
-	<select id="getUserById" resultMap="moduleResultMap">
-		select * from t_user where id = #{id}
+	<select id="listUserInfo" resultType="map">
+		SELECT * from (
+			SELECT u.*,
+			(
+				SELECT GROUP_CONCAT(t.`name`,':',t.club_score) from (
+				SELECT SUM(cs.club_score) club_score,c.`name`,c.cruser from t_club c 
+				LEFT JOIN t_club_score cs on c.ID = cs.club_id
+				where cs.`status` = 1 GROUP BY c.`name`
+				) t where t.cruser = u.id
+			) clubscore,
+			(SELECT SUM(ush.score) from t_user_score_hitory ush where ush.score > 0 and ush.id = u.id) uscore,
+			(SELECT COUNT(0) from t_club WHERE cruser = u.id) create_club_count,
+			(SELECT COUNT(0) from t_club_users where club_id in (SELECT ID from t_club where cruser = u.id)) club_renshu,
+			(SELECT group_concat(c.`name`) from t_club_users cu LEFT JOIN t_club c on c.ID = cu.club_id WHERE cu.user_id = u.id) suoshu_club
+		
+			from t_user u 
+		
+		) tt 
+		<where>
+			1=1 
+			<if test="clubName != null and clubName != ''">
+				and tt.suoshu_club like '%${clubName}%'
+			</if>
+			<if test="uname != null and uname != ''">
+				and tt.uname like '%${uname}%'
+			</if>
+		</where>
 	</select>
 	
-	<select id="getUserByOpenid" resultMap="moduleResultMap">
-		select * from t_user where openid = #{openid}
-	</select>
-	
-	<select id="listUser" resultMap="moduleResultMap">
-		select * from t_user order by crtime desc
-	</select>
-	
-	<select id="getUserAndScore" resultType="map">
-		select u.id,u.uname,us.score from t_user u left join t_user_score us 
-		on u.id = us.user_id where u.id = #{userId}
-	</select>
-	
-	
-	
-	<insert id="add">
-		insert into t_user(openid,
-		<if test="email != null and email != ''">
-			email,
-		</if>
-		<if test="phone != null and phone != ''">
-			phone,
-		</if>
-		himg,crtime,uptime,utype,uname)
-		values(#{openid},
-		<if test="email != null and email != ''">
-			#{email},
-		</if>
-		<if test="phone != null and phone != ''">
-			#{phone},
-		</if>
-		#{himg},now(),now(),#{utype},#{uname})
-	</insert>
-	<update id="update">
-		update t_user 
-		set 
-		<if test="email != null and email != ''">
-			email = #{email},
-		</if>
-		<if test="phone != null and phone != ''">
-			phone = #{phone},
-		</if>
-		<if test="himg != null and himg != ''">
-			himg = #{himg},
-		</if>
-		<if test="utype != null and utype != ''">
-			utype = #{utype},
-		</if>
+	<select  id="listUserScore" resultType="map">
+		SELECT u.id,u.himg,u.uname,sh.score,sh.crtime from t_user u 
+		LEFT JOIN t_user_score_hitory sh on u.id = sh.user_id where sh.score > 0
 		<if test="uname != null and uname != ''">
-			uname = #{uname},
+			and uname like '%${uname}%'
 		</if>
-		uptime = now()  
-		where id = #{id}
-	</update>
+		<if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+			and DATE_FORMAT(sh.crtime,'%Y-%m') BETWEEN #{startTime} and #{endTime}
+		</if>
+		order by sh.crtime desc
+	</select>
 	
-	<delete id="deleteById">
-		delete from t_user where id = #{id}
-	</delete>
 </mapper> 

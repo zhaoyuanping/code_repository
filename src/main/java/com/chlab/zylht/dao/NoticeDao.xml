@@ -9,6 +9,7 @@
 		<result column="userId" property="userId" jdbcType="INTEGER" />
 		<result column="create_time" property="createTime" jdbcType="DATE" />
 		<result column="update_time" property="updateTime" jdbcType="DATE" />
+		<result column="rack" property="rack" jdbcType="INTEGER" />
 	</resultMap>
 	
 	<select id="listNotice" resultMap="moduleResultMap">
@@ -36,13 +37,27 @@
 		<if test="userId != null and userId != ''">
 			userId = #{userId},
 		</if>
+		<if test="rack != null and rack != ''">
+			rack = #{rack},
+		</if>
 		update_time = now()
 		where id = #{id}
 	</update>
 	<update id="updateStatus">
-		update t_club_notice set status = #{status} where id = #{id} and status = 0
+		<if test="status != null">
+			update t_club_notice set status = #{status} where id = #{id} 
+		</if>
+		<if test="rack != null">
+			update t_club_notice set rack = #{rack} where id = #{id}  
+		</if>
+		
 	</update>
-	
+	<select id="countRack" resultType="int">
+		select count(0) from t_club_notice where rack = 1
+	</select>
+	<select id="countStatus" resultType="int">
+		select count(0) from t_club_notice where status = 1
+	</select>
 	<delete id="deleteNotice">
 		delete from t_club_notice where id = #{id}
 	</delete>

@@ -10,9 +10,21 @@
 },{
 	"id":3,
 	"text":"用户信息",
-	"url":""
+	"url":"jsp/user.jsp"
 },{
-	"id":4,
-	"text":"xxni",
+	"id":5,
+	"text":"钻石优惠设置",
+	"url":"jsp/score_setting.jsp"
+},{
+	"id":6,
+	"text":"账号管理",
+	"url":"jsp/administrators.jsp"
+},{
+	"id":7,
+	"text":"财务统计",
+	"url":"jsp/statistics.jsp"
+},{
+	"id":8,
+	"text":"客户端升级",
 	"url":""
 }]

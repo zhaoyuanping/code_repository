@@ -36,8 +36,17 @@ public class NoticeService {
 		}
 	}
 	
-	public void updateStatus(int status,int id) {
-		dao.updateStatus(status, id);
+	public void updateStatus(Integer status,Integer rack, int id) {
+		dao.updateStatus(status, rack, id);
+	}
+	
+	public int countStatus(){
+		
+		return dao.countStatus();
+	}
+	public int countRack() {
+		
+		return dao.countRack();
 	}
 	
 	public void delete(int id) {

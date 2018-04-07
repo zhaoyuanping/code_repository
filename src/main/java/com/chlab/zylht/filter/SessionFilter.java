@@ -28,7 +28,7 @@ public class SessionFilter extends OncePerRequestFilter {
 			return;
 		} else {
 			if(null == user) {
-				if(path.endsWith("wx/callBack.do") || path.endsWith("login.html")){
+				if(path.endsWith("login.html")){
 					filterChain.doFilter(request, response);
 					return;
 				}

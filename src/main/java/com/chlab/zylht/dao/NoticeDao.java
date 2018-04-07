@@ -9,6 +9,10 @@ import com.github.pagehelper.Page;
  * @author zyp
  * 公告
  */
+/**
+ * @author Q
+ *
+ */
 public interface NoticeDao extends BaseDao {
 	
 	/**
@@ -40,7 +44,20 @@ public interface NoticeDao extends BaseDao {
 	 * 修改公告顶置状态
 	 * @param id 主键ID
 	 */
-	void updateStatus(@Param("status")int status ,@Param("id")int id);
+	void updateStatus(@Param("status")Integer status ,@Param("rack")Integer rack, @Param("id")int id);
+	
+	
+	/**
+	 * 获取顶置条数
+	 * @return
+	 */
+	int countStatus();
+	
+	/**
+	 * 获取上架条数
+	 * @return
+	 */
+	int countRack();
 	
 	/**
 	 * 删除公告

@@ -1,4 +1,90 @@
 $(function(){
+	
+	$('#tt').datagrid({    
+	    url:'../club/listClub.do',    
+	    method:'get',
+	    singleSelect:true,
+	    pagination:true,
+	    loadFilter: function(data){
+			if(data.datas.length > 0){
+				return data.datas;
+			}
+			else{
+				return data;
+			}
+		},
+	    columns:[[    
+	    	{field:'id',title:'id',hidden:true},    
+	        {field:'name',title:'俱乐部名称',width:180,align:'center'}, 
+	        {field:'clubpeople',title:'俱乐部人数',width:100,align:'center'},    
+	        {field:'uname',title:'创建人',width:100,align:'center'},    
+	        {field:'himg',title:'俱乐部头像',width:120,align:'center'},  
+	        {field:'crTime',title:'创建时间',width:140,align:'center',formatter:function(v,r,i){
+	        	
+	        	return value(v);
+	        }}, 
+	        {field:'cz',title:'操作',width:100,align:'center',formatter:function(value,row,index){
+	        	
+	        	return '<a class="userDatil" data-id='+row.id+' href="javascript:;" style="text-decoration: none;">用户详情</a>';
+	        }}    
+	    ]],
+	    onLoadSuccess:function(){
+	    	$('.userDatil').click(function(){
+	    		var id = $(this).attr('data-id');
+	    		$('#win').window({   
+	    			title:'用户详情',
+	    			width:880,    
+	    			height:570,    
+	    			modal:true,
+	    			collapsible:false,
+	    			minimizable:false,
+	    			maximizable:false
+	    		});  
+	    		$('#win').window('open');
+	    		$('#usertable').datagrid({
+	    			 url:'../club/listUser.do',    
+	    			    method:'get',
+	    			    queryParams: {
+	    					id: id,
+	    				},
+	    			    singleSelect:true,
+	    			    loadFilter: function(data){
+	    					if(data.msg.length > 0){
+	    						return data.msg;
+	    					}
+	    					else{
+	    						return data;
+	    					}
+	    				},
+	    			    columns:[[    
+	    			    	{field:'id',title:'游戏ID',width:100,align:'center'},    
+	    			        {field:'uname',title:'昵称',width:100,align:'center'},    
+	    			        {field:'phone',title:'联系电话',width:180,align:'center'},    
+	    			        {field:'email',title:'邮箱',width:120,align:'center'},    
+	    			        {field:'crtime',title:'创建时间',width:120,align:'center'}    
+	    			    ]],
+	    		});
+	    	});
+	    }
+	});  
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
 	$('#datagrid').datagrid({    
 	    url:'../club/listClub.do',    
 	    singleSelect:true,
@@ -79,4 +165,4 @@ $(function(){
 	    },
 	    toolbar: [{}]    
 	}); 
-});
+*/});

@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.chlab.zylht.entity.Notice;
 import com.chlab.zylht.service.NoticeService;
 import com.chlab.zylht.util.PageData;
-import com.chlab.zylht.util.Uploader;
 import com.github.pagehelper.Page;
 
 /**
@@ -74,13 +72,25 @@ public class NoticeController extends BaseController{
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/updateStatus", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public Map<String, Object> updateStatus(@RequestParam int status, @RequestParam int id) {
+	public Map<String, Object> updateStatus(Integer status, Integer rack, @RequestParam int id) {
 		try {
-			service.updateStatus(status, id);
+			if(null != status && status == 1) {
+				if(service.countStatus() >= 2) {
+					
+					return failMsg("顶置条数已达到上限,最大顶置2条");
+				}
+			}
+			if(null != rack && rack == 1) {
+				if(service.countRack() >= 5) {
+					
+					return failMsg("上架条数已达到上限,最大上架5条");
+				}
+			}
+			service.updateStatus(status, rack, id);
 			
 			return successMsg("保存成功");
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 			return failMsg("保存失败，请联系系统管理员!");
 		}
 	}
@@ -187,7 +197,7 @@ public class NoticeController extends BaseController{
 				String realPath = prop.getProperty("upfile-path") + File.separator;
 				File f = new File(realPath, fileName);
 				file.transferTo(f);
-				Map<String, Object> map = new HashMap<>();
+				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("link",prop.getProperty("image-url") + fileName);
 				map.put("url",prop.getProperty("image-url") + fileName);
 				map.put("name",file.getName());
