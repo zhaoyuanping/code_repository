@@ -152,7 +152,7 @@ $(function(){
 		$('#ff').form('submit', {    
 		    url:'../notice/update.do',   
 		    onSubmit: function(param){    
-		        param.content = ue.getContent();    
+		        param.content = ue.getContent().replace('<img','<img width="100%" ');    
 		    },
 		    success:function(data){    
 		    	$('#dg').datagrid('reload');
