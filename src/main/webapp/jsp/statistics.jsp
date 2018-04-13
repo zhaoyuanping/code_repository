@@ -15,8 +15,8 @@
 	<table id="tt" style="height:500px"></table>  
 <!-- 	<input id="myDate" name="myDate" class="easyui-datebox" data-options="formatter:myFormatter,parser:myParser"></input> -->
 </body>	
-<script type="text/javascript" src="../js/jsp/statistics.js"></script>
 <script type="text/javascript" src="../js/jsp/calendar.js"></script>
+<script type="text/javascript" src="../js/jsp/statistics.js"></script>
 
 
 <script type="text/javascript">

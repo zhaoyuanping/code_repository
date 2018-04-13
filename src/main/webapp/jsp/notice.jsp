@@ -33,8 +33,8 @@
 				    <div style="margin-top: 10px;padding-left: 10px;">   
 				        <label for="content">公告内容:</label>   
 			<!-- 		<div id="frolal" class="fr-view" style="width: 850px;"></div> -->
-						 <script id="container" name="content" type="text/plain">
-      						  这里写你的初始化内容
+						 <script id="container" type="text/plain">
+      						 
     					 </script>
 				    </div> 
 				    <div style="margin-top: 10px;padding-left: 10px;">   

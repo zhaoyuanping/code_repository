@@ -125,8 +125,10 @@ $(function(){
 		        		  $('#win').window('open');
 		        		  $.get('../notice/getNoticeById.do',{id:$(this).attr('data-id')},function(d){
 		        			  if(d.rst){
-		        				  $('#title').textbox('setValue',d.msg.title);
-		        				  $('#n-status').combobox('setValue', d.msg.status);
+//		        				  $('#ff').form('load',{
+//		        					  title:d.msg.title,
+//		        					  n-status:d.msg.status
+//		        					});
 		        			  }
 		        		  });
 //		        		  $.post('notice/update.do',{status:1,id:$(this).attr('data-id')},function(d){
@@ -151,7 +153,7 @@ $(function(){
 	$('#submit').bind('click', function(){    
 		$('#ff').form('submit', {    
 		    url:'../notice/update.do',   
-		    onSubmit: function(param){    
+		    onSubmit: function(param){  
 		        param.content = ue.getContent().replace('<img','<img width="100%" ');    
 		    },
 		    success:function(data){    
