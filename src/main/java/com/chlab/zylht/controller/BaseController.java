@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.chlab.zylht.entity.User;
+import com.chlab.zylht.entity.Administrators;
 import com.chlab.zylht.util.PageData;
 import com.github.pagehelper.Page;
 
@@ -22,9 +22,9 @@ public class BaseController {
 	 * 获取当前登录用户
 	 * @return
 	 */
-	public User getLoginUser(){
+	public Administrators getLoginUser(){
 
-		return (User) getSession().getAttribute("user");
+		return (Administrators) getSession().getAttribute("user");
 	}
 	
 	/**

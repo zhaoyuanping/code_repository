@@ -21,7 +21,7 @@
 	</select>
 	
 	<select id="listUser" resultMap="moduleResultMap">
-		select * from t_administrators 
+		select * from t_administrators where id &lt;&gt; 0
 		order by crtime desc
 	</select>
 	

@@ -127,11 +127,11 @@ public class NoticeController extends BaseController{
 //			notice.setUserId(getLoginUser().getId());
 			service.update(notice);
 			
-			return successMsg("添加成功");
+			return successMsg("保存成功");
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			return failMsg("添加失败，请联系系统管理员!");
+			return failMsg("保存失败，请联系系统管理员!");
 		}
 	}
 	

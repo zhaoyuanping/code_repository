@@ -22,6 +22,7 @@
 		 <div class="easyui-layout" data-options="fit:true">   
 	        <div data-options="region:'north',split:true,border:false" style="height:480px">
 	       		<form id="ff" method="post" enctype="multipart/form-data">   
+	       			<input name="id" type="hidden">
 				    <div style="margin-top: 10px;padding-left: 10px;">   
 				        <label for="name" >公告标题:</label>   
 				        <input id="title" class="easyui-validatebox" type="text" name="title" data-options="required:true" />   

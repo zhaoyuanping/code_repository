@@ -13,7 +13,7 @@ $(function(){
 		},
 		loadFilter: function(data){
 			if(data.datas.length > 0){
-				return data.datas
+				return data.datas;
 			}
 			else{
 				return data;
@@ -68,6 +68,8 @@ $(function(){
 		        			    minimizable:false,
 	        			    	maximizable:false
 		        			});  
+		        		  $('#ff').form('clear');
+		        		  ue.setContent('');
 		        		  $('#win').window('open');
 
 		        	  }
@@ -125,10 +127,12 @@ $(function(){
 		        		  $('#win').window('open');
 		        		  $.get('../notice/getNoticeById.do',{id:$(this).attr('data-id')},function(d){
 		        			  if(d.rst){
-//		        				  $('#ff').form('load',{
-//		        					  title:d.msg.title,
-//		        					  n-status:d.msg.status
-//		        					});
+		        				  $('#ff').form('load',{
+		        					  id:d.msg.id,
+		        					  title:d.msg.title,
+		        					  status:d.msg.status
+		        				  });
+		        				  ue.setContent(d.msg.content);
 		        			  }
 		        		  });
 //		        		  $.post('notice/update.do',{status:1,id:$(this).attr('data-id')},function(d){

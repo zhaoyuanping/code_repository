@@ -51,6 +51,7 @@ $(function(){
 	    			minimizable:false,
 	    			maximizable:false
 	    		});  
+	    		$('#addff').form('clear');
 	    		$('#addwin').window('open');
 	    	}
 	    },{
@@ -71,6 +72,7 @@ $(function(){
 	    			minimizable:false,
 	    			maximizable:false
 	    		});  
+	    		$('#pwdff').form('clear');
 	    		$('#winpwd').window('open');
 	    	}
 	    }],

@@ -3,12 +3,76 @@
 <head>
 <meta charset="UTF-8">
 <title>登录</title>
+<style type="text/css">
+body { background: #9cb8b3; }
+body > div{
+	 width: 100%;
+	 text-align: center;
+}
+input{
+	border: none;
+    height: 26px;
+    color: gray;
+    width: 250px;
+    border-radius: 4px;
+}
+button{
+	display: inline-block;
+    width: 250px;
+    border: none;
+    border-radius: 4px;
+    height: 30px;
+    line-height: 30px;
+    color: #6f9c94;
+    font-weight: bold;
+    letter-spacing: 9px;
+    position: relative;
+    left: 24px;
+    top: 10px;
+    cursor: pointer;
+}
+.username{
+	position: absolute;
+    top: 33%;
+}
+.psssword{
+	position: absolute;
+    top: 40%;
+}
+.submit{
+	position: absolute;
+    top: 45%;
+}
+.errormsg{
+	position: absolute;
+    top: 50%;
+    color: red;
+    font-size: 13px;
+    
+}
+.at{
+    font: 600 1.5em/1 'Raleway', sans-serif;
+    color: rgba(0,0,0,.5);
+    text-transform: uppercase;
+    letter-spacing: .5em;
+    position: absolute;
+    top: 25%;
+}
+
+</style>
 </head>
 <body>
-	name:<input id="username" type="text" value="admin"><br>
-	password:<input id="psssword" type="password" value="123456"><br>
-	<button id="submit">登录</button>
-	
+	<div class="at">众友乐后台管理系统</div>
+	<div class="username">
+		账号：<input id="username" type="text" maxlength="30"><br>
+	</div>
+	<div  class="psssword">
+		密码：<input id="psssword" type="password" maxlength="30"><br>
+	</div>
+	<div  class="submit">
+		<button id="submit">登录</button>
+	</div>
+	<div class="errormsg"></div>
 </body>
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="js/login.js"></script>

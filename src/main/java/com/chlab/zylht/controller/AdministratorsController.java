@@ -1,6 +1,10 @@
 package com.chlab.zylht.controller;
 
+import java.io.IOException;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -20,6 +24,15 @@ public class AdministratorsController extends BaseController{
 	
 	@Autowired
 	private AdministratorsService administratorsService;
+	
+	@RequestMapping(value = "/isNullUser", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public @ResponseBody Map<String, Object> isNullUser(){
+		Administrators u = getLoginUser();
+		if(null != u) 
+			return successMsg();
+		
+		return failMsg();
+	}
 	
 	@RequestMapping(value = "/gettUserById", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public @ResponseBody Map<String, Object> gettUserById(int id) {
@@ -61,7 +74,7 @@ public class AdministratorsController extends BaseController{
 		if(null != administrators) {
 			getSession().setAttribute("user", administrators);
 			
-			return successMsg();
+			return successMsg(administrators);
 		}
 		
 		return failMsg();
@@ -87,6 +100,18 @@ public class AdministratorsController extends BaseController{
 			e.printStackTrace();
 			return failMsg("保存失败"); 
 		}
+	}
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public @ResponseBody Map<String, Object> logout(HttpServletRequest request,HttpServletResponse response) {
+		request.getSession().invalidate();
+		try {
+			response.sendRedirect("../login.html");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return successMsg();
 	}
 
 }

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.chlab.zylht.entity.User;
+import com.chlab.zylht.entity.Administrators;
 
 
 public class SessionFilter extends OncePerRequestFilter {
@@ -22,7 +22,7 @@ public class SessionFilter extends OncePerRequestFilter {
 		
 		String path = request.getServletPath();
 
-		User user = (User) request.getSession().getAttribute("user");
+		Administrators user = (Administrators) request.getSession().getAttribute("user");
 		if (excludes.contains(path)) {
 			filterChain.doFilter(request, response);
 			return;
