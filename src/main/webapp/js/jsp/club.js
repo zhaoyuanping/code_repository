@@ -7,7 +7,10 @@ $(function(){
 	    pagination:true,
 	    loadFilter: function(data){
 			if(data.datas.length > 0){
-				return data.datas;
+				var o = {};
+				o.rows = data.datas;
+				o.total = data.total;
+				return o;
 			}
 			else{
 				return data;
@@ -18,7 +21,10 @@ $(function(){
 	        {field:'name',title:'俱乐部名称',width:180,align:'center'}, 
 	        {field:'clubpeople',title:'俱乐部人数',width:100,align:'center'},    
 	        {field:'uname',title:'创建人',width:100,align:'center'},    
-	        {field:'himg',title:'俱乐部头像',width:120,align:'center'},  
+	        {field:'himg',title:'俱乐部头像',width:120,align:'center',formatter:function(v,row,index){
+	        	
+	        	return '<img src='+ v +' width=35 height=35 style="padding: 5px;">';
+	        }},  
 	        {field:'crTime',title:'创建时间',width:140,align:'center',formatter:function(v,r,i){
 	        	
 	        	return value(v);
@@ -61,24 +67,23 @@ $(function(){
 	    			        {field:'uname',title:'昵称',width:100,align:'center'},    
 	    			        {field:'phone',title:'联系电话',width:180,align:'center'},    
 	    			        {field:'email',title:'邮箱',width:120,align:'center'},    
-	    			        {field:'crtime',title:'创建时间',width:120,align:'center'}    
+	    			        {field:'crtime',title:'创建时间',width:140,align:'center',formatter:function(v,r,i){
+	    			        	
+	    			        	return value(v);
+	    			        }}    
 	    			    ]],
 	    		});
 	    	});
 	    }
 	});  
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	var p = $('#tt').datagrid('getPager');
+	$(p).pagination({
+		pageSize:10,
+		beforePageText:'第',
+		afterPageText:'页 共 {pages} 页',
+		displayMsg:'当前显示 {from} - {to} 条记录 共 {total} 条记录'
+	});
 	
 	
 	

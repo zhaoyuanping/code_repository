@@ -30,12 +30,12 @@ public class ClubController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/listClub", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public @ResponseBody PageData listClub(Integer pageNum, Integer pageSize) {
-		pageNum = pageNum == null? 1 : pageNum;
-		pageSize = pageSize == null? 10 : pageSize;
-		Page<VClub> page = clubService.listClub(pageNum, pageSize);
+	public @ResponseBody PageData listClub(Integer page, Integer rows) {
+		page = page == null? 1 : page;
+		rows = rows == null? 10 : rows;
+		Page<VClub> pages = clubService.listClub(page, rows);
 		
-		return pageData(page);
+		return pageData(pages);
 	}
 	
 	/**

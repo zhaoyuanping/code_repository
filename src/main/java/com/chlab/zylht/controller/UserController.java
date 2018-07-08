@@ -40,12 +40,12 @@ public class UserController extends BaseController{
 	}
 	
 	@RequestMapping(value = "/listUserInfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public @ResponseBody PageData listUserInfo(String clubName, String uname, Integer pageNum, Integer pageSize){
-		pageNum = pageNum == null? 1 : pageNum;
-		pageSize = pageSize == null? 10 : pageSize;
-		Page<Map<String, Object>> page = userService.listUserInfo(clubName, uname, pageNum, pageSize);
+	public @ResponseBody PageData listUserInfo(String clubName, String uname, Integer page, Integer rows){
+		page = page == null? 1 : page;
+		rows = rows == null? 10 : rows;
+		Page<Map<String, Object>> pages = userService.listUserInfo(clubName, uname, page, rows);
 		
-		return pageData(page);
+		return pageData(pages);
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -57,12 +57,20 @@ public class UserController extends BaseController{
 			e.printStackTrace();
 		}
 	}
+	
 	@RequestMapping(value = "/listUserScore", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public @ResponseBody PageData listUserScore(String uname,String startTime, String endTime, Integer pageNum, Integer pageSize){
-		pageNum = pageNum == null? 1 : pageNum;
-		pageSize = pageSize == null? 10 : pageSize;
-		Page<Map<String, Object>> page = userService.listUserScore(uname, startTime, endTime, pageNum, pageSize);
+	public @ResponseBody PageData listUserScore(String uname,String startTime, String endTime, Integer page, Integer rows){
+		page = page == null? 1 : page;
+		rows = rows == null? 10 : rows;
+		Page<Map<String, Object>> pages = userService.listUserScore(uname, startTime, endTime, page, rows);
 		
-		return pageData(page);
+		return pageData(pages);
+	}
+	
+
+	@RequestMapping(value = "/scoreCount", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public @ResponseBody Map<String, Object> scoreCount(){
+		
+		 return successMsg(userService.scoreCount());
 	}
 }

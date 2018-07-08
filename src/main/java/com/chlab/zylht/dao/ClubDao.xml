@@ -18,7 +18,7 @@
 		from t_club c 
 		LEFT JOIN t_user u on u.id = c.cruser
 		
-		where c.`status` = 1 ORDER BY c.crtime DESC
+		where c.`status` = 1 or c.`status` = 0 ORDER BY c.crtime DESC
 	</select>
 	
 	<select id="listUser" resultType="com.chlab.zylht.entity.User" parameterType="java.lang.Integer" >

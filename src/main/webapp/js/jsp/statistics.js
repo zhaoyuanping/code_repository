@@ -6,7 +6,10 @@ $(function(){
 	    pagination:true,
 	    loadFilter: function(data){
 			if(data.datas.length > 0){
-				return data.datas;
+				var o = {};
+				o.rows = data.datas;
+				o.total = data.total;
+				return o;
 			}
 			else{
 				return data;
@@ -15,7 +18,10 @@ $(function(){
 	    columns:[[    
 	    	{field:'id',title:'id',hidden:true},    
 	        {field:'uname',title:'用户昵称',width:180,align:'center'}, 
-	        {field:'himg',title:'头像',width:120,align:'center'},  
+	        {field:'himg',title:'头像',width:120,align:'center',formatter:function(v,row,index){
+	        	
+	        	return '<img src='+ v +' width=35 height=35 style="padding: 5px;">';
+	        }},  
 	        {field:'score',title:'充值积分',width:120,align:'center'},
 	        {field:'crtime',title:'充值时间',width:140,align:'center',formatter:function(v,r,i){
 	        	
@@ -58,4 +64,18 @@ $(function(){
 		}]
 
 	});  
+	var p = $('#tt').datagrid('getPager');
+	$(p).pagination({
+		pageSize:10,
+		beforePageText:'第',
+		afterPageText:'页 共 {pages} 页',
+		displayMsg:'当前显示 {from} - {to} 条记录 共 {total} 条记录'
+	});
+	
+	
+	$.get('../user/scoreCount.do',function(data){
+		if(data.rst){
+			$('#summoney').html(data.msg.summoney + '.00');
+		}
+	});
 });

@@ -13,6 +13,9 @@
 </head>
 <body>
 	<table id="tt" style="height:500px"></table>  
+	<div>
+		<p>总金额：<span id="summoney">0</span></p>
+	</div>
 <!-- 	<input id="myDate" name="myDate" class="easyui-datebox" data-options="formatter:myFormatter,parser:myParser"></input> -->
 </body>	
 <script type="text/javascript" src="../js/jsp/calendar.js"></script>

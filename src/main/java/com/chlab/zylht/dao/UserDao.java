@@ -12,4 +12,6 @@ public interface UserDao extends BaseDao {
 	Page<Map<String, Object>> listUserInfo(@Param("clubName") String clubName,@Param("uname") String uname);
 	
 	Page<Map<String, Object>> listUserScore(@Param("uname") String uname,@Param("startTime") String startTime,@Param("endTime") String endTime);
+	
+	Map<String, Object> scoreCount();
 }

@@ -28,4 +28,9 @@ public class UserService {
 		
 		return userDao.listUserScore(uname,startTime,endTime);
 	}
+	
+	public Map<String, Object> scoreCount(){
+		
+		return userDao.scoreCount();
+	}
 }

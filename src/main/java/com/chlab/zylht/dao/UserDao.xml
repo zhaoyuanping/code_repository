@@ -20,10 +20,10 @@
 				SELECT GROUP_CONCAT(t.`name`,':',t.club_score) from (
 				SELECT SUM(cs.club_score) club_score,c.`name`,c.cruser from t_club c 
 				LEFT JOIN t_club_score cs on c.ID = cs.club_id
-				where cs.`status` = 1 GROUP BY c.`name`
+				where cs.`status` = 1 GROUP BY c.`name`,c.cruser
 				) t where t.cruser = u.id
 			) clubscore,
-			(SELECT SUM(ush.score) from t_user_score_hitory ush where ush.score > 0 and ush.id = u.id) uscore,
+			(SELECT SUM(ush.score) from t_user_score_hitory ush where ush.score > 0 and ush.user_id = u.id) uscore,
 			(SELECT COUNT(0) from t_club WHERE cruser = u.id) create_club_count,
 			(SELECT COUNT(0) from t_club_users where club_id in (SELECT ID from t_club where cruser = u.id)) club_renshu,
 			(SELECT group_concat(c.`name`) from t_club_users cu LEFT JOIN t_club c on c.ID = cu.club_id WHERE cu.user_id = u.id) suoshu_club
@@ -40,6 +40,7 @@
 				and tt.uname like '%${uname}%'
 			</if>
 		</where>
+		order by suoshu_club DESC
 	</select>
 	
 	<select  id="listUserScore" resultType="map">
@@ -52,6 +53,10 @@
 			and DATE_FORMAT(sh.crtime,'%Y-%m') BETWEEN #{startTime} and #{endTime}
 		</if>
 		order by sh.crtime desc
+	</select>
+	
+	<select id="scoreCount" resultType="map">
+		SELECT SUM(ush.buyer_pay_amount) summoney from t_user_score_hitory ush where ush.`status` = 1
 	</select>
 	
 </mapper> 

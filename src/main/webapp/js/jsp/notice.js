@@ -2,7 +2,7 @@ $(function(){
 	var ue = UM.getEditor('container');
 	ue.setHeight(250);
 	ue.setWidth(830);
-	var IURL = 'http://www.yingyongting.com/zylfile/images/';
+	var IURL = 'http://zyl.longshengplay.cn/zylfile/images/';
 	$('#dg').datagrid({
 		singleSelect:true,
 		pagination:true,
